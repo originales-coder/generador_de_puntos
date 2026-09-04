@@ -8,7 +8,7 @@ st.set_page_config(
     page_title="Control de Puntos", page_icon="🏆", layout="wide"
 )
 
-# Estilos CSS para maximizar el ancho y eliminar separadores
+# Estilos CSS avanzados para eliminar espacios muertos por completo
 st.markdown(
     """
     <style>
@@ -17,42 +17,72 @@ st.markdown(
     header {visibility: hidden;}
     
     .block-container {
-        padding-top: 0.5rem;
+        padding-top: 0.4rem;
         padding-bottom: 2rem;
-        padding-left: 0.3rem;
-        padding-right: 0.3rem;
+        padding-left: 0.4rem;
+        padding-right: 0.4rem;
         max-width: 100% !important;
     }
     
-    [data-testid="column"] {
-        width: 50% !important;
-        flex: 1 1 50% !important;
-        min-width: 50% !important;
-        padding: 0px 2px !important;
+    /* Contenedor principal en 2 columnas reales de CSS sin huecos raros */
+    .contenedor-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px 12px;
     }
     
-    /* Fila horizontal limpia sin bordes ni separadores grises */
-    .fila-horizontal {
+    /* Cada fila de jugadora con distribución compacta */
+    .fila-jugadora {
         display: flex;
         align-items: center;
-        justify-content: space-between;
         background-color: #fafafa;
         border-radius: 6px;
-        padding: 4px 6px;
-        margin-bottom: 4px;
+        padding: 4px 8px;
+        justify-content: space-between;
     }
     
-    /* Botones grandes y fáciles de pulsar */
+    .info-jugadora {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-grow: 1;
+        overflow: hidden;
+    }
+    
+    .nombre-jugadora {
+        font-size: 0.95rem;
+        font-weight: bold;
+        color: #222;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .puntos-jugadora {
+        font-size: 0.95rem;
+        font-weight: bold;
+        color: #555;
+        white-space: nowrap;
+    }
+    
+    /* Grupo de botones juntos y compactos */
+    .grupo-botones {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+    }
+    
+    /* Botones cuadrados y táctiles */
     .stButton > button {
         background-color: #800020;
         color: white;
-        border-radius: 6px;
+        border-radius: 4px;
         border: none;
-        padding: 2px 0px;
+        padding: 2px 8px;
         font-size: 16px;
         font-weight: bold;
-        min-height: 36px;
-        width: 100%;
+        min-height: 32px;
+        min-width: 32px;
     }
     .stButton > button:hover {
         background-color: #5a0017;
@@ -114,10 +144,10 @@ if mes_actual not in st.session_state.historial:
       f"Jugadora {i+1}": 0 for i in range(16)
   }
 
-# Título y mes limpios y en una línea
+# Título y mes limpios
 st.markdown(
     f"""
-    <div style='text-align: center; margin-bottom: 10px;'>
+    <div style='text-align: center; margin-bottom: 12px;'>
         <h2 style='margin: 0; font-size: 1.3rem; display: inline-block;'>Control de Puntos</h2>
         <span style='color: gray; font-size: 0.9rem; margin-left: 8px;'>({mes_actual})</span>
     </div>
@@ -128,77 +158,41 @@ st.markdown(
 puntos_mes = st.session_state.historial[mes_actual]
 jugadoras = list(puntos_mes.keys())
 
-# Renderizamos las 16 jugadoras en dos columnas sin separadores
-for i in range(0, len(jugadoras), 2):
-  col1, col2 = st.columns(2)
+# Renderizamos usando una estructura de rejilla limpia en HTML/CSS
+st.markdown("<div class='contenedor-grid'>", unsafe_allow_html=True)
 
-  # Columna Izquierda
-  with col1:
-    jugadora_1 = jugadoras[i]
-    st.markdown(
-        f"<div class='fila-horizontal'>", unsafe_allow_html=True
-    )
+for jugadora in jugadoras:
+  puntos = puntos_mes[jugadora]
 
-    nc1, nc2, nc3, nc4 = st.columns([2.2, 1.1, 1, 1])
-    with nc1:
-      st.markdown(
-          f"<div style='font-size: 0.9rem; font-weight: bold; color: #222; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-top: 6px;'>{jugadora_1}</div>",
-          unsafe_allow_html=True,
+  # Abrimos la tarjeta de la jugadora
+  st.markdown(
+      f"""
+        <div class='fila-jugadora'>
+            <div class='info-jugadora'>
+                <span class='nombre-jugadora'>{jugadora}</span>
+                <span class='puntos-jugadora'>{puntos} pts</span>
+            </div>
+    """,
+      unsafe_allow_html=True,
+  )
+
+  # Botones interactivos de Streamlit colocados de forma nativa
+  col_b1, col_b2 = st.columns(2)
+  with col_b1:
+    if st.button("-", key=f"menos_{jugadora}"):
+      st.session_state.historial[mes_actual][jugadora] = (
+          int(st.session_state.historial[mes_actual].get(jugadora, 0)) - 1
       )
-    with nc2:
-      st.markdown(
-          f"<div style='font-size: 0.95rem; font-weight: bold; color: #444; text-align: center; padding-top: 6px;'>{puntos_mes[jugadora_1]} pts</div>",
-          unsafe_allow_html=True,
+      guardar_datos(st.session_state.historial)
+      st.rerun()
+  with col_b2:
+    if st.button("+", key=f"mas_{jugadora}"):
+      st.session_state.historial[mes_actual][jugadora] = (
+          int(st.session_state.historial[mes_actual].get(jugadora, 0)) + 1
       )
-    with nc3:
-      if st.button("-", key=f"menos_{jugadora_1}"):
-        st.session_state.historial[mes_actual][jugadora_1] = (
-            int(st.session_state.historial[mes_actual].get(jugadora_1, 0)) - 1
-        )
-        guardar_datos(st.session_state.historial)
-        st.rerun()
-    with nc4:
-      if st.button("+", key=f"mas_{jugadora_1}"):
-        st.session_state.historial[mes_actual][jugadora_1] = (
-            int(st.session_state.historial[mes_actual].get(jugadora_1, 0)) + 1
-        )
-        guardar_datos(st.session_state.historial)
-        st.rerun()
+      guardar_datos(st.session_state.historial)
+      st.rerun()
 
-    st.markdown("</div>", unsafe_allow_html=True)
+  st.markdown("</div>", unsafe_allow_html=True)
 
-  # Columna Derecha
-  if i + 1 < len(jugadoras):
-    with col2:
-      jugadora_2 = jugadoras[i + 1]
-      st.markdown(
-          f"<div class='fila-horizontal'>", unsafe_allow_html=True
-      )
-
-      dc1, dc2, dc3, dc4 = st.columns([2.2, 1.1, 1, 1])
-      with dc1:
-        st.markdown(
-            f"<div style='font-size: 0.9rem; font-weight: bold; color: #222; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-top: 6px;'>{jugadora_2}</div>",
-            unsafe_allow_html=True,
-        )
-      with dc2:
-        st.markdown(
-            f"<div style='font-size: 0.95rem; font-weight: bold; color: #444; text-align: center; padding-top: 6px;'>{puntos_mes[jugadora_2]} pts</div>",
-            unsafe_allow_html=True,
-        )
-      with dc3:
-        if st.button("-", key=f"menos_{jugadora_2}"):
-          st.session_state.historial[mes_actual][jugadora_2] = (
-              int(st.session_state.historial[mes_actual].get(jugadora_2, 0)) - 1
-          )
-          guardar_datos(st.session_state.historial)
-          st.rerun()
-      with dc4:
-        if st.button("+", key=f"mas_{jugadora_2}"):
-          st.session_state.historial[mes_actual][jugadora_2] = (
-              int(st.session_state.historial[mes_actual].get(jugadora_2, 0)) + 1
-          )
-          guardar_datos(st.session_state.historial)
-          st.rerun()
-
-      st.markdown("</div>", unsafe_allow_html=True)
+st.markdown("</div>", unsafe_allow_html=True)
