@@ -14,15 +14,16 @@ st.markdown(
     footer {visibility: hidden;}
     header {visibility: hidden;}
     
+    /* Reducido al mínimo el padding superior e inferior de la página */
     .block-container {
-        padding-top: 0.3rem;
-        padding-bottom: 1rem;
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
+        padding-top: 0.1rem !important;
+        padding-bottom: 0.2rem !important;
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
         max-width: 800px !important;
     }
     
-    /* Forzar tamaño gigante en el botón y en su texto interno de Streamlit */
+    /* Botones cuadrados de 70x70px */
     .stButton > button {
         background-color: #800020 !important;
         color: white !important;
@@ -107,9 +108,10 @@ jugadoras = list(puntos_mes.keys())
 for jugadora in jugadoras:
   puntos = puntos_mes[jugadora]
 
+  # Margen inferior reducido a 1px para rascar espacio vertical entre filas
   st.markdown(
       """
-        <div style='background-color: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 4px 8px; margin-bottom: 2px;'>
+        <div style='background-color: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 2px 8px; margin-bottom: 1px;'>
     """,
       unsafe_allow_html=True,
   )
