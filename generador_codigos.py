@@ -43,22 +43,38 @@ mes_actual = datetime.datetime.now().strftime("%Y-%m")
 # Cargar datos iniciales
 def cargar_datos():
   if os.path.exists(JSON_FILE):
-    with open(JSON_FILE, "r", encoding="utf-8") as f:
-      data = json.load(f)
-      # Asegurar compatibilidad si el JSON es antiguo o por meses
-      if "2026-09" in data or any("-" in k for k in data.keys()):
-        return data
-      else:
-        # Estructura antigua a mensual por defecto
-        return {
-            mes_actual: {
-                jugadora: puntos for jugadora, puntos in data.items()
-            }
-        }
+    try:
+      with open(JSON_FILE, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    except Exception:
+      data = {}
   else:
-    # 16 jugadoras por defecto para el mes actual
-    jugadoras_def = {f"Jugadora {i+1}": 0 for i in range(16)}
-    return {mes_actual: jugadoras_def}
+    data = {}
+
+  # Asegurar estructura por meses
+  if mes_actual not in data or not isinstance(data.get(mes_actual), dict):
+    # Lista de las 16 jugadoras por defecto
+    jugadoras_nombres = [
+        "Alma",
+        "Greta",
+        "Iria",
+        "Laia",
+        "Lia",
+        "Marina",
+        "Marta",
+        "Martina",
+        "Mireia",
+        "Nerea",
+        "Ona Franquet",
+        "Ona Orri",
+        "Silvia",
+        "Txell",
+        "Valen",
+        "Vega",
+    ]
+    data[mes_actual] = {j: 0 for j in jugadoras_nombres}
+
+  return data
 
 
 # Guardar datos
@@ -71,11 +87,11 @@ def guardar_datos(datos):
 if "historial" not in st.session_state:
   st.session_state.historial = cargar_datos()
 
-# Asegurar que el mes actual existe en el estado
+# Verificación de seguridad por si acaso el mes no está inicializado
 if mes_actual not in st.session_state.historial:
-  # Copiar nombres con 0 puntos del mes anterior o iniciar vacíos
-  primer_jugadora = {f"Jugadora {i+1}": 0 for i in range(16)}
-  st.session_state.historial[mes_actual] = primer_jugadora
+  st.session_state.historial[mes_actual] = {
+      f"Jugadora {i+1}": 0 for i in range(16)
+  }
 
 st.title("🏆 Control de Puntos")
 st.subheader(f"Mes: {mes_actual}")
@@ -95,12 +111,16 @@ for i, jugadora in enumerate(jugadoras):
     c1, c2 = st.columns(2)
     with c1:
       if st.button("-", key=f"menos_{jugadora}"):
-        st.session_state.historial[mes_actual][jugadora] -= 1
+        st.session_state.historial[mes_actual][jugadora] = (
+            int(st.session_state.historial[mes_actual].get(jugadora, 0)) - 1
+        )
         guardar_datos(st.session_state.historial)
         st.rerun()
     with c2:
       if st.button("+", key=f"mas_{jugadora}"):
-        st.session_state.historial[mes_actual][jugadora] += 1
+        st.session_state.historial[mes_actual][jugadora] = (
+            int(st.session_state.historial[mes_actual].get(jugadora, 0)) + 1
+        )
         guardar_datos(st.session_state.historial)
         st.rerun()
 
