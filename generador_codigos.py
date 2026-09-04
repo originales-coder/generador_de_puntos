@@ -15,7 +15,7 @@ st.markdown(
     header {visibility: hidden;}
     
     .block-container {
-        padding-top: 0.5rem;
+        padding-top: 0.3rem;
         padding-bottom: 1rem;
         padding-left: 0.5rem;
         padding-right: 0.5rem;
@@ -100,17 +100,6 @@ if mes_actual not in st.session_state.historial:
   st.session_state.historial[mes_actual] = {
       f"Jugadora {i+1}": 0 for i in range(16)
   }
-
-# Título y mes compactos en la misma línea
-st.markdown(
-    f"""
-    <div style='display: flex; justify-content: center; align-items: baseline; gap: 8px; margin-bottom: 8px;'>
-        <h2 style='margin: 0; font-size: 1.8rem; color: #111;'>Control de Puntos</h2>
-        <span style='color: #555; font-size: 1.1rem; font-weight: bold;'>({mes_actual})</span>
-    </div>
-""",
-    unsafe_allow_html=True,
-)
 
 puntos_mes = st.session_state.historial[mes_actual]
 jugadoras = list(puntos_mes.keys())
