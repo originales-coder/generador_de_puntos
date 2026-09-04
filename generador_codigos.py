@@ -8,7 +8,7 @@ st.set_page_config(
     page_title="Control de Puntos", page_icon="🏆", layout="wide"
 )
 
-# Estilos CSS para maximizar el ancho, eliminar márgenes y hacer todo grande
+# Estilos CSS para maximizar el ancho y eliminar separadores
 st.markdown(
     """
     <style>
@@ -16,7 +16,6 @@ st.markdown(
     footer {visibility: hidden;}
     header {visibility: hidden;}
     
-    /* Eliminar los márgenes laterales gigantes de Streamlit para ganar espacio real */
     .block-container {
         padding-top: 0.5rem;
         padding-bottom: 2rem;
@@ -25,7 +24,6 @@ st.markdown(
         max-width: 100% !important;
     }
     
-    /* Forzar que las dos columnas principales ocupen el 50% exacto cada una */
     [data-testid="column"] {
         width: 50% !important;
         flex: 1 1 50% !important;
@@ -33,16 +31,15 @@ st.markdown(
         padding: 0px 2px !important;
     }
     
-    /* Tarjeta horizontal compacta pero con letra grande */
+    /* Fila horizontal limpia sin bordes ni separadores grises */
     .fila-horizontal {
         display: flex;
         align-items: center;
         justify-content: space-between;
         background-color: #fafafa;
-        border: 1px solid #ddd;
         border-radius: 6px;
-        padding: 6px 8px;
-        margin-bottom: 6px;
+        padding: 4px 6px;
+        margin-bottom: 4px;
     }
     
     /* Botones grandes y fáciles de pulsar */
@@ -131,7 +128,7 @@ st.markdown(
 puntos_mes = st.session_state.historial[mes_actual]
 jugadoras = list(puntos_mes.keys())
 
-# Renderizamos las 16 jugadoras en dos columnas aprovechando todo el ancho
+# Renderizamos las 16 jugadoras en dos columnas sin separadores
 for i in range(0, len(jugadoras), 2):
   col1, col2 = st.columns(2)
 
