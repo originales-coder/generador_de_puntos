@@ -91,11 +91,12 @@ if mes_actual not in st.session_state.historial:
       f"Jugadora {i+1}": 0 for i in range(16)
   }
 
+# Título y mes estrictamente en la misma línea con flexbox
 st.markdown(
     f"""
-    <div style='text-align: center; margin-bottom: 20px;'>
-        <h2 style='margin: 0; font-size: 1.8rem; display: inline-block; color: #111;'>Control de Puntos</h2>
-        <span style='color: #555; font-size: 1.1rem; margin-left: 10px; font-weight: bold;'>({mes_actual})</span>
+    <div style='display: flex; justify-content: center; align-items: baseline; gap: 8px; margin-bottom: 15px;'>
+        <h2 style='margin: 0; font-size: 1.6rem; color: #111;'>Control de Puntos</h2>
+        <span style='color: #555; font-size: 1rem; font-weight: bold;'>({mes_actual})</span>
     </div>
 """,
     unsafe_allow_html=True,
