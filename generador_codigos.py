@@ -15,22 +15,22 @@ st.markdown(
     header {visibility: hidden;}
     
     .block-container {
-        padding-top: 0.8rem;
-        padding-bottom: 2rem;
-        padding-left: 0.8rem;
-        padding-right: 0.8rem;
+        padding-top: 0.5rem;
+        padding-bottom: 1rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
         max-width: 700px !important;
     }
     
-    /* Botones proporcionales y cómodos */
+    /* Botones grandes y fáciles de tocar */
     .stButton > button {
         background-color: #800020;
         color: white;
         border-radius: 6px;
         border: none;
-        font-size: 18px;
+        font-size: 20px;
         font-weight: bold;
-        height: 36px;
+        height: 42px;
         width: 100%;
     }
     .stButton > button:hover {
@@ -95,7 +95,7 @@ if mes_actual not in st.session_state.historial:
 # Título y mes compactos en la misma línea
 st.markdown(
     f"""
-    <div style='display: flex; justify-content: center; align-items: baseline; gap: 8px; margin-bottom: 12px;'>
+    <div style='display: flex; justify-content: center; align-items: baseline; gap: 8px; margin-bottom: 8px;'>
         <h2 style='margin: 0; font-size: 1.5rem; color: #111;'>Control de Puntos</h2>
         <span style='color: #555; font-size: 1rem; font-weight: bold;'>({mes_actual})</span>
     </div>
@@ -109,10 +109,10 @@ jugadoras = list(puntos_mes.keys())
 for jugadora in jugadoras:
   puntos = puntos_mes[jugadora]
 
-  # Tarjeta más compacta con menos espacio entre filas
+  # Tarjeta ultra compacta con margen inferior mínimo (2px)
   st.markdown(
       """
-        <div style='background-color: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 4px 8px; margin-bottom: 5px;'>
+        <div style='background-color: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 2px 8px; margin-bottom: 2px;'>
     """,
       unsafe_allow_html=True,
   )
@@ -121,12 +121,12 @@ for jugadora in jugadoras:
 
   with c1:
     st.markdown(
-        f"<div style='font-size: 1.3rem; font-weight: bold; color: #111; padding-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>{jugadora}</div>",
+        f"<div style='font-size: 1.4rem; font-weight: bold; color: #111; padding-top: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>{jugadora}</div>",
         unsafe_allow_html=True,
     )
   with c2:
     st.markdown(
-        f"<div style='font-size: 1.3rem; font-weight: bold; color: #800020; padding-top: 4px; text-align: center;'>{puntos} pts</div>",
+        f"<div style='font-size: 1.4rem; font-weight: bold; color: #800020; padding-top: 6px; text-align: center;'>{puntos} pts</div>",
         unsafe_allow_html=True,
     )
   with c3:
