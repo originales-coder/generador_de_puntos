@@ -8,71 +8,33 @@ st.set_page_config(
     page_title="Control de Puntos", page_icon="🏆", layout="centered"
 )
 
-# Estilos CSS para alinear todo en una única línea ultra-compacta
+# Estilos CSS para compactar al máximo los espacios y alinear título y mes
 st.markdown(
     """
     <style>
-    /* Ocultar elementos innecesarios de Streamlit */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
     
     .block-container {
-        padding-top: 0.4rem;
+        padding-top: 0.3rem;
         padding-bottom: 2rem;
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-        max-width: 100% !important;
+        padding-left: 0.4rem;
+        padding-right: 0.4rem;
+        max-width: 600px !important; /* Limitar ancho para que no se separe tanto en pantallas grandes */
     }
     
-    /* Forzar que las dos columnas principales se queden lado a lado */
-    [data-testid="column"] {
-        width: 50% !important;
-        flex: 1 1 50% !important;
-        min-width: 50% !important;
-        padding: 0px 2px !important;
-    }
-    
-    /* Tarjeta o línea compacta para la jugadora */
-    .fila-jugadora {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background-color: #fbfbfb;
-        border: 1px solid #eee;
-        border-radius: 6px;
-        padding: 4px 6px;
-        margin-bottom: 4px;
-    }
-    
-    .nombre-mini {
-        font-size: 0.85rem;
-        font-weight: bold;
-        color: #333;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 75px;
-    }
-    
-    .puntos-mini {
-        font-size: 0.85rem;
-        font-weight: bold;
-        color: #555;
-        text-align: center;
-    }
-    
-    /* Botones compactos cuadrados */
+    /* Botones cuadrados compactos */
     .stButton > button {
         background-color: #800020;
         color: white;
         border-radius: 4px;
         border: none;
         padding: 2px 0px;
-        font-size: 14px;
+        font-size: 13px;
         font-weight: bold;
-        min-height: 26px;
-        min-width: 26px;
+        min-height: 24px;
+        min-width: 24px;
         width: 100%;
     }
     .stButton > button:hover {
@@ -135,37 +97,36 @@ if mes_actual not in st.session_state.historial:
       f"Jugadora {i+1}": 0 for i in range(16)
   }
 
-# Cabecera súper reducida
-JSON_FILE = "historial_puntos.json"
+# Título y mes juntos en una sola línea horizontal
 st.markdown(
-    "<h3 style='text-align: center; font-size: 1.1rem; margin-bottom: 0px;'>Control de Puntos</h3>",
-    unsafe_allow_html=True,
-)
-st.markdown(
-    f"<p style='text-align: center; color: gray; font-size: 0.75rem; margin-top: 0px; margin-bottom: 8px;'>Mes: {mes_actual}</p>",
+    f"""
+    <div style='display: flex; justify-content: center; align-items: baseline; gap: 10px; margin-bottom: 8px;'>
+        <h3 style='margin: 0; font-size: 1rem;'>Control de Puntos</h3>
+        <span style='color: gray; font-size: 0.75rem;'>({mes_actual})</span>
+    </div>
+""",
     unsafe_allow_html=True,
 )
 
 puntos_mes = st.session_state.historial[mes_actual]
 jugadoras = list(puntos_mes.keys())
 
-# Renderizamos las 16 jugadoras en dos columnas con diseño de línea única
+# Renderizamos las 16 jugadoras en dos columnas muy compactas
 for i in range(0, len(jugadoras), 2):
   col1, col2 = st.columns(2)
 
   # Columna Izquierda
   with col1:
     jugadora_1 = jugadoras[i]
-    # Distribución en línea: [Nombre] [Puntos] [-] [+]
-    nc1, nc2, nc3, nc4 = st.columns([2.2, 1.2, 1, 1])
+    nc1, nc2, nc3, nc4 = st.columns([2.2, 1, 0.9, 0.9])
     with nc1:
       st.markdown(
-          f"<div style='font-size: 0.8rem; font-weight: bold; padding-top: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;'>{jugadora_1}</div>",
+          f"<div style='font-size: 0.75rem; font-weight: bold; padding-top: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;'>{jugadora_1}</div>",
           unsafe_allow_html=True,
       )
     with nc2:
       st.markdown(
-          f"<div style='font-size: 0.8rem; padding-top: 6px; text-align: center;'><b>{puntos_mes[jugadora_1]}</b></div>",
+          f"<div style='font-size: 0.75rem; padding-top: 5px; text-align: center;'><b>{puntos_mes[jugadora_1]}</b></div>",
           unsafe_allow_html=True,
       )
     with nc3:
@@ -187,15 +148,15 @@ for i in range(0, len(jugadoras), 2):
   if i + 1 < len(jugadoras):
     with col2:
       jugadora_2 = jugadoras[i + 1]
-      dc1, dc2, dc3, dc4 = st.columns([2.2, 1.2, 1, 1])
+      dc1, dc2, dc3, dc4 = st.columns([2.2, 1, 0.9, 0.9])
       with dc1:
         st.markdown(
-            f"<div style='font-size: 0.8rem; font-weight: bold; padding-top: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;'>{jugadora_2}</div>",
+            f"<div style='font-size: 0.75rem; font-weight: bold; padding-top: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;'>{jugadora_2}</div>",
             unsafe_allow_html=True,
         )
       with dc2:
         st.markdown(
-            f"<div style='font-size: 0.8rem; padding-top: 6px; text-align: center;'><b>{puntos_mes[jugadora_2]}</b></div>",
+            f"<div style='font-size: 0.75rem; padding-top: 5px; text-align: center;'><b>{puntos_mes[jugadora_2]}</b></div>",
             unsafe_allow_html=True,
         )
       with dc3:
