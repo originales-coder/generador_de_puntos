@@ -15,13 +15,14 @@ st.markdown(
     header {visibility: hidden;}
     
     .block-container {
-        padding-top: 1rem;
+        padding-top: 0.8rem;
         padding-bottom: 2rem;
-        padding-left: 1rem;
-        padding-right: 1rem;
+        padding-left: 0.8rem;
+        padding-right: 0.8rem;
         max-width: 700px !important;
     }
     
+    /* Botones proporcionales y cómodos */
     .stButton > button {
         background-color: #800020;
         color: white;
@@ -29,7 +30,7 @@ st.markdown(
         border: none;
         font-size: 18px;
         font-weight: bold;
-        height: 38px;
+        height: 36px;
         width: 100%;
     }
     .stButton > button:hover {
@@ -91,11 +92,11 @@ if mes_actual not in st.session_state.historial:
       f"Jugadora {i+1}": 0 for i in range(16)
   }
 
-# Título y mes estrictamente en la misma línea con flexbox
+# Título y mes compactos en la misma línea
 st.markdown(
     f"""
-    <div style='display: flex; justify-content: center; align-items: baseline; gap: 8px; margin-bottom: 15px;'>
-        <h2 style='margin: 0; font-size: 1.6rem; color: #111;'>Control de Puntos</h2>
+    <div style='display: flex; justify-content: center; align-items: baseline; gap: 8px; margin-bottom: 12px;'>
+        <h2 style='margin: 0; font-size: 1.5rem; color: #111;'>Control de Puntos</h2>
         <span style='color: #555; font-size: 1rem; font-weight: bold;'>({mes_actual})</span>
     </div>
 """,
@@ -108,23 +109,24 @@ jugadoras = list(puntos_mes.keys())
 for jugadora in jugadoras:
   puntos = puntos_mes[jugadora]
 
+  # Tarjeta más compacta con menos espacio entre filas
   st.markdown(
       """
-        <div style='background-color: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 8px; padding: 6px 10px; margin-bottom: 8px;'>
+        <div style='background-color: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 4px 8px; margin-bottom: 5px;'>
     """,
       unsafe_allow_html=True,
   )
 
-  c1, c2, c3, c4 = st.columns([2.5, 1.2, 0.9, 0.9])
+  c1, c2, c3, c4 = st.columns([2.5, 1.2, 0.8, 0.8])
 
   with c1:
     st.markdown(
-        f"<div style='font-size: 1.1rem; font-weight: bold; color: #111; padding-top: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>{jugadora}</div>",
+        f"<div style='font-size: 1.3rem; font-weight: bold; color: #111; padding-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>{jugadora}</div>",
         unsafe_allow_html=True,
     )
   with c2:
     st.markdown(
-        f"<div style='font-size: 1.1rem; font-weight: bold; color: #800020; padding-top: 6px; text-align: center;'>{puntos} pts</div>",
+        f"<div style='font-size: 1.3rem; font-weight: bold; color: #800020; padding-top: 4px; text-align: center;'>{puntos} pts</div>",
         unsafe_allow_html=True,
     )
   with c3:
