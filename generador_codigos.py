@@ -109,7 +109,7 @@ jugadoras = list(puntos_mes.keys())
 for jugadora in jugadoras:
   puntos = puntos_mes[jugadora]
 
-  # Tarjeta con fuente a 6rem
+  # Tarjeta con fuente a 5rem exactos
   st.markdown(
       """
         <div style='background-color: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 4px 8px; margin-bottom: 2px;'>
@@ -121,12 +121,12 @@ for jugadora in jugadoras:
 
   with c1:
     st.markdown(
-        f"<div style='font-size: 6rem; font-weight: bold; color: #111; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>{jugadora}</div>",
+        f"<div style='font-size: 5rem; font-weight: bold; color: #111; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>{jugadora}</div>",
         unsafe_allow_html=True,
     )
   with c2:
     st.markdown(
-        f"<div style='font-size: 6rem; font-weight: bold; color: #800020; line-height: 1.1; text-align: center;'>{puntos}</div>",
+        f"<div style='font-size: 5rem; font-weight: bold; color: #800020; line-height: 1.1; text-align: center;'>{puntos}</div>",
         unsafe_allow_html=True,
     )
   with c3:
