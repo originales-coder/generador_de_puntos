@@ -14,12 +14,11 @@ st.markdown(
     footer {visibility: hidden;}
     header {visibility: hidden;}
     
-    /* Reducido al mínimo el padding superior e inferior de la página */
     .block-container {
-        padding-top: 0.1rem !important;
-        padding-bottom: 0.2rem !important;
-        padding-left: 0.5rem !important;
-        padding-right: 0.5rem !important;
+        padding-top: 0rem !important;
+        padding-bottom: 0rem !important;
+        padding-left: 0.3rem !important;
+        padding-right: 0.3rem !important;
         max-width: 800px !important;
     }
     
@@ -108,10 +107,10 @@ jugadoras = list(puntos_mes.keys())
 for jugadora in jugadoras:
   puntos = puntos_mes[jugadora]
 
-  # Margen inferior reducido a 1px para rascar espacio vertical entre filas
+  # Tarjeta ultra compacta con padding mínimo y margen de 1px
   st.markdown(
       """
-        <div style='background-color: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 2px 8px; margin-bottom: 1px;'>
+        <div style='background-color: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 4px; padding: 1px 6px; margin-bottom: 1px;'>
     """,
       unsafe_allow_html=True,
   )
@@ -120,12 +119,12 @@ for jugadora in jugadoras:
 
   with c1:
     st.markdown(
-        f"<div style='font-size: 5rem; font-weight: bold; color: #111; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>{jugadora}</div>",
+        f"<div style='font-size: 5rem; font-weight: bold; color: #111; line-height: 1.0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>{jugadora}</div>",
         unsafe_allow_html=True,
     )
   with c2:
     st.markdown(
-        f"<div style='font-size: 5rem; font-weight: bold; color: #800020; line-height: 1.1; text-align: center;'>{puntos}</div>",
+        f"<div style='font-size: 5rem; font-weight: bold; color: #800020; line-height: 1.0; text-align: center;'>{puntos}</div>",
         unsafe_allow_html=True,
     )
   with c3:
