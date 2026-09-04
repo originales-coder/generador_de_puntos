@@ -22,24 +22,25 @@ st.markdown(
         max-width: 800px !important;
     }
     
-    /* Botones cuadrados de 70x70px con el símbolo a 50px */
+    /* Forzar tamaño gigante en los botones de + y - */
     .stButton > button {
-        background-color: #800020;
-        color: white;
-        border-radius: 6px;
-        border: none;
-        font-size: 50px;
-        font-weight: bold;
-        height: 70px;
-        width: 70px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        line-height: 1;
+        background-color: #800020 !important;
+        color: white !important;
+        border-radius: 6px !important;
+        border: none !important;
+        font-size: 55px !important;
+        font-weight: bold !important;
+        height: 70px !important;
+        width: 70px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        line-height: 1 !important;
+        padding: 0px !important;
     }
     .stButton > button:hover {
-        background-color: #5a0017;
-        color: white;
+        background-color: #5a0017 !important;
+        color: white !important;
     }
     </style>
 """,
