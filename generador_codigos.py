@@ -22,16 +22,20 @@ st.markdown(
         max-width: 800px !important;
     }
     
-    /* Botones cuadrados de 70px por 70px */
+    /* Botones cuadrados de 70x70px con el símbolo a 50px */
     .stButton > button {
         background-color: #800020;
         color: white;
         border-radius: 6px;
         border: none;
-        font-size: 32px;
+        font-size: 50px;
         font-weight: bold;
         height: 70px;
         width: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
     }
     .stButton > button:hover {
         background-color: #5a0017;
