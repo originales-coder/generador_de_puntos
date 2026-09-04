@@ -22,15 +22,15 @@ st.markdown(
         max-width: 800px !important;
     }
     
-    /* Botones ajustados y cómodos */
+    /* Botones grandes, altos y muy fáciles de tocar */
     .stButton > button {
         background-color: #800020;
         color: white;
         border-radius: 6px;
         border: none;
-        font-size: 24px;
+        font-size: 32px;
         font-weight: bold;
-        height: 50px;
+        height: 75px;
         width: 100%;
     }
     .stButton > button:hover {
@@ -109,7 +109,7 @@ jugadoras = list(puntos_mes.keys())
 for jugadora in jugadoras:
   puntos = puntos_mes[jugadora]
 
-  # Tarjeta con fuente a 5rem exactos
+  # Tarjeta con fuente a 5rem y espacio optimizado para los botones grandes
   st.markdown(
       """
         <div style='background-color: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 4px 8px; margin-bottom: 2px;'>
