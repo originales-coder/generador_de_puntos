@@ -101,13 +101,31 @@ if mes_actual not in st.session_state.historial:
       f"Jugadora {i+1}": 0 for i in range(16)
   }
 
+# --- BARRA LATERAL (HISTORIAL Y ESTADÍSTICAS) ---
+with st.sidebar:
+  st.markdown("## 📊 Historial")
+  meses_disponibles = sorted(list(st.session_state.historial.keys()), reverse=True)
+  mes_seleccionado = st.selectbox("Selecciona mes", meses_disponibles)
+
+  if mes_seleccionado:
+    datos_mes = st.session_state.historial[mes_seleccionado]
+    jugadoras_ordenadas = sorted(
+        datos_mes.items(), key=lambda x: x[1], reverse=True
+    )
+
+    st.markdown(f"**Ranking {mes_seleccionado}:**")
+    for jugadora, puntos_totales in jugadoras_ordenadas:
+      st.markdown(
+          f"- **{jugadora}**: `{puntos_totales} pts`"
+      )
+
+# --- PANTALLA PRINCIPAL (100% optimizada para móvil) ---
 puntos_mes = st.session_state.historial[mes_actual]
 jugadoras = list(puntos_mes.keys())
 
 for jugadora in jugadoras:
   puntos = puntos_mes[jugadora]
 
-  # Tarjeta ultra compacta con padding mínimo y margen de 1px
   st.markdown(
       """
         <div style='background-color: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 4px; padding: 1px 6px; margin-bottom: 1px;'>
